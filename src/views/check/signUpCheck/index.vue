@@ -70,6 +70,7 @@
       background
       layout="total,prev, pager, next"
       :total="total"
+      :page-size="this.list.pageSize"
       @current-change="changePageNum">
     </el-pagination>
     <!-- 分页 -->
