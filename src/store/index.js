@@ -6,6 +6,8 @@ import settings from './modules/settings'
 import user from './modules/user'
 import signupcheck from './modules/signupcheck'
 import usermanage from './modules/usermanage'
+import infocheck from './modules/infocheck'
+import authmanage from './modules/authmanage'
 
 Vue.use(Vuex)
 
@@ -15,7 +17,9 @@ const store = new Vuex.Store({
     settings,
     user,
     signupcheck,
-    usermanage
+    usermanage,
+    infocheck,
+    authmanage,
   },
   getters
 })
