@@ -8,6 +8,7 @@ import signupcheck from './modules/signupcheck'
 import usermanage from './modules/usermanage'
 import infocheck from './modules/infocheck'
 import authmanage from './modules/authmanage'
+import projectManage from './modules/projectManage'
 
 Vue.use(Vuex)
 
@@ -20,6 +21,7 @@ const store = new Vuex.Store({
     usermanage,
     infocheck,
     authmanage,
+    projectManage,
   },
   getters
 })
