@@ -6,6 +6,12 @@ export default{
         usermanage:[],
         total:0
     },
+    getters:{
+        userNameList:function(state){
+            console.log(state)
+            return state.usermanage.map((i)=>{return i.list})||'NODATA'
+        }
+    },
     mutations:{
         SET_USERMANAGE(state,usermanage){
             state.usermanage=usermanage

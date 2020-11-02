@@ -1,45 +1,58 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">欢迎您: {{ name }}</div>
-    <div class="dashboard-signupCharts" />
+    {{userNameList}}
+    <highCharts :options="options" customerStyle="width:96%; height: 400px"></highCharts>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState } from "vuex";
+import highCharts from '@/components/highCharts.vue';
 
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
   computed: {
-    ...mapGetters([
-      'name'
-    ]),
-    ...mapState('signupcheck', ['signupcheck'])
+    ...mapGetters(["name"]),
+    ...mapGetters('usermanage',["userNameList"]),
+    ...mapState("signupcheck", ["signupcheck"]),
   },
-  mounted() {
-    console.log(this.signupcheck)
-    const myChart = this.$echarts.init(document.getElementsByClassName('dashboard-signupCharts')[0])
-    myChart.setOption({
-      title: {
-        text: '报名信息总览'
+  data() {
+    return {
+      //options用于配置hightcharts
+      chart: null,
+      options: {
+        chart: {
+          type: "bar",
+        },
+        title: {
+          text: "Fruit Consumption",
+        },
+        xAxis: {
+          categories: this.userNameList,
+        },
+        yAxis: {
+          title: {
+            text: "Fruit eaten",
+          },
+        },
+        series: [
+          {
+            name: "Jane",
+            data: [1, 0, 4],
+          },
+          {
+            name: "John",
+            data: [5, 7, 3],
+          },
+        ],
       },
-      tooltip: {},
-      xAxis: {
-        data: this.signupcheck.map((item) => {
-          return item.realname
-        })
-      },
-      yAxis: {},
-      series: [{
-        name: '账户余额',
-        type: 'line',
-        data: this.signupcheck.map((item) => {
-          return item.money
-        })
-      }]
-    })
+    };
+  },
+  components:{
+    highCharts
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -52,7 +65,7 @@ export default {
     line-height: 46px;
   }
 }
-.dashboard-signupCharts{
+.dashboard-signupCharts {
   width: 85%;
   height: 280px;
   margin-top: 20px;
