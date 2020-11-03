@@ -22,11 +22,12 @@
     <input autosize type="text" placeholder="输入项目名称" />
     <!-- top -->
     <!-- 表格 -->
+    {{ signupcheck[0] }}
     <el-table :data="signupcheck" stripe style="width: 100%">
       <el-table-column align="center" prop="id" label="编号" width="80px" />
-      <el-table-column align="center" prop="realname" label="姓名" />
-      <el-table-column align="center" prop="telephone" label="联系方式" />
-      <el-table-column align="center" prop="status" label="选择项目" />
+      <el-table-column align="center" prop="customer.realname" label="姓名" />
+      <el-table-column align="center" prop="customer.telephone" label="联系方式" />
+      <el-table-column align="center" prop="product.name" label="选择项目" />
       <el-table-column
         align="center"
         prop="registerTime"
@@ -128,13 +129,13 @@ export default {
   },
   created() {
     // this.findAll()
-    this.queryCustermer(this.list);
+    this.querySignUpInfo(this.list);
   },
   computed: {
     ...mapState("signupcheck", ["signupcheck", "total"]),
   },
   methods: {
-    ...mapActions("signupcheck", ["findAll", "queryCustermer"]),
+    ...mapActions("signupcheck", ["findAll", "querySignUpInfo"]),
     handleClose(done) {
       this.$confirm("确认关闭？")
         .then((_) => {
@@ -158,7 +159,7 @@ export default {
     // 分页
     changePageNum(page) {
       this.list.page = page - 1;
-      this.queryCustermer(this.list);
+      this.querySignUpInfo(this.list);
     },
   },
 };

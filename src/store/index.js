@@ -9,9 +9,17 @@ import usermanage from './modules/usermanage'
 import infocheck from './modules/infocheck'
 import authmanage from './modules/authmanage'
 import projectManage from './modules/projectManage'
+import moduleManage from './modules/moduleManage'
 
 Vue.use(Vuex)
-
+// 这个sotre里面存放了包含
+//   游学栏目管理 -- projectManage
+//   报名信息审核 -- signupcheck
+//   咨询信息管理 -- infocheck
+//   模块管理     -- moduleManage
+//   用户管理     -- usermanage
+//   权限管理     -- authmanage
+// 的信息维护内容
 const store = new Vuex.Store({
   modules: {
     app,
@@ -22,6 +30,7 @@ const store = new Vuex.Store({
     infocheck,
     authmanage,
     projectManage,
+    moduleManage
   },
   getters
 })
