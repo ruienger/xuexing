@@ -13,8 +13,11 @@ function pageHelper(originArr, filterObj, pageObj){
         })
     }
     // 分页
-    let startPage = pageObj.page * pageObj.pageSize
-    return originArr.slice(startPage, startPage + pageObj.pageSize)
+    if(pageObj.page && pageObj.pageSize){
+        let startPage = pageObj.page * pageObj.pageSize
+        return originArr.slice(startPage, startPage + pageObj.pageSize)
+    }
+    return originArr
 }
 
 export default pageHelper

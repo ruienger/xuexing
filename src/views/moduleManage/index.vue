@@ -6,25 +6,60 @@
         <!-- 轮播图与精彩瞬间、学生风采同属一个组件 -->
         <tableWithImg
           :projects="projects9441"
+          :categoryId="9441"
           @showClicked="shownHandler($event)"
           @deleteClicked="deleteHandler($event)"
+          @updateClicked="updateHandler($event)"
         ></tableWithImg>
       </el-tab-pane>
       <el-tab-pane label="游学项目" name="9411">
-        {{ projects9411 }}
+        <simpleTable
+          :projects="projects9411"
+          :categoryId="9411"
+          :labelArr="[
+            { label: '项目名称', prop: 'name' },
+            { label: '项目状态', prop: 'status' },
+          ]"
+          :isFixedLabel="true"
+          :status="['报名中', '审核中', '游学中', '已完成']"
+          @updateClicked="updateHandler($event)"
+        ></simpleTable>
       </el-tab-pane>
       <el-tab-pane label="精彩瞬间" name="9432">
-        <tableWithImg :projects="projects9432"></tableWithImg>
+        <tableWithImg
+          :projects="projects9432"
+          :categoryId="9432"
+          @showClicked="shownHandler($event)"
+          @deleteClicked="deleteHandler($event)"
+          @updateClicked="updateHandler($event)"
+        ></tableWithImg>
       </el-tab-pane>
       <el-tab-pane label="常见问题" name="9440">
-        <!-- 常见问题与关于我们同属一个组件 -->
-        <richText :projects="projects9440"></richText>
+        <!-- 常见问题与游学项目同属一个组件 -->
+        <simpleTable
+          :projects="projects9440"
+          :categoryId="9440"
+          :labelArr="[
+            { label: '问题标题', prop: 'name' },
+            { label: '回答内容', prop: 'description' },
+            { label: '状态', prop: 'status' },
+          ]"
+          :status="['正常', '禁用']"
+          :isFixedLabel="false"
+          @updateClicked="updateHandler($event)"
+        ></simpleTable>
       </el-tab-pane>
       <el-tab-pane label="学生风采" name="9414">
-        <tableWithImg :projects="projects9414"></tableWithImg>
+        <tableWithImg
+          :projects="projects9414"
+          :categoryId="9414"
+          @showClicked="shownHandler($event)"
+          @deleteClicked="deleteHandler($event)"
+          @updateClicked="updateHandler($event)"
+        ></tableWithImg>
       </el-tab-pane>
       <el-tab-pane label="关于我们" name="9425">
-        <richText :projects="projects9425"></richText>
+        <richText :projects="projects9425" @submitClicked="submitHandler($event)"></richText>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -33,6 +68,7 @@
 <script>
 import richText from "@/components/richText.vue";
 import tableWithImg from "@/components/tableWithImg.vue";
+import simpleTable from "@/components/simpleTable.vue";
 import pageHelper from "@/utils/pageHelper";
 import { mapActions, mapState } from "vuex";
 
@@ -89,7 +125,6 @@ export default {
         });
         // 轮播图超过 4 个
         if (status9441.length < 5) {
-          console.log(e.status);
           this.updateProject({ data: e, id: 9441 });
         } else {
           this.$message({
@@ -106,10 +141,21 @@ export default {
     deleteHandler(e) {
       this.deleteProject({ id: e.id, cateId: e.categoryId });
     },
+    // 新增按钮事件
+    updateHandler(e) {
+      console.log(e)
+      this.updateProject({ data: e, id: e.categoryId });
+    },
+    // 富文本编辑器提交按钮事件
+    submitHandler(e){
+      console.log(e)
+      this.updateProject({ data:e, id:e.categoryId })
+    }
   },
   components: {
     richText,
     tableWithImg,
+    simpleTable,
   },
   created() {
     this.queryProject(this.activeName);
