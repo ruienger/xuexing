@@ -1,5 +1,6 @@
 <template>
-  <div class="login-container">
+  <div class="login-container" :style="backgroundImage">
+    <div class='loginf'>
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
@@ -41,7 +42,7 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button v-waves :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
 
       <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
@@ -50,12 +51,15 @@
 
     </el-form>
   </div>
+  </div>
 </template>
 
 <script>
+import Waves from './directives/waves/waves'
 import { validUsername } from '@/utils/validate'
-
+import allBackgroundImages from './bg/bg'
 export default {
+  directives: { Waves },
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
@@ -84,7 +88,8 @@ export default {
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined
+      redirect: undefined,
+      allBackgroundImages	
     }
   },
   watch: {
@@ -122,16 +127,25 @@ export default {
         }
       })
     }
-  }
+  },
+  computed: {
+		backgroundImage() {
+		    // 根据背景图数组的长度随机选择索引
+		    const randIndex = Math.floor(Math.random() * this.allBackgroundImages.length)
+		    return {
+		        // 获取对应的图片资源并将其设置到`background-image`属性上
+		        backgroundImage: `url(${this.allBackgroundImages[randIndex]})`
+		    }
+		}	
+	  },
 }
 </script>
 
 <style lang="scss">
 /* 修复input 背景不协调 和光标变色 */
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
 $bg:#283443;
-$light_gray:#fff;
+$light_gray:rgb(235, 235, 235);
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
@@ -165,23 +179,24 @@ $cursor: #fff;
   }
 
   .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(39, 39, 39, 0.15);
     border-radius: 5px;
-    color: #454545;
+    color: #fcfcfc;
   }
 }
 </style>
 
 <style lang="scss" scoped>
 $bg:#2d3a4b;
-$dark_gray:#889aa4;
-$light_gray:#eee;
+$dark_gray:#f7f7f7;
+$titlecolor:rgb(65, 50, 50);
 
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  // background-color: $bg;
+  background-size: 100% 100%;
   overflow: hidden;
 
   .login-form {
@@ -191,6 +206,13 @@ $light_gray:#eee;
     padding: 160px 35px 0;
     margin: 0 auto;
     overflow: hidden;
+  }
+  .loginf{
+    background-color:rgba(255,255,255,0.4);
+    width: 520px;
+    height:520px;
+    position:relative;
+    margin:0 auto;
   }
 
   .tips {
@@ -218,7 +240,7 @@ $light_gray:#eee;
 
     .title {
       font-size: 26px;
-      color: $light_gray;
+      color: $titlecolor;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
