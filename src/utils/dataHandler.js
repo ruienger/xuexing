@@ -64,7 +64,7 @@ function queryPage(url, list, callback) {
 function queryAll(url, callback) {
   // 发送请求
   request({
-    method: 'POST',
+    method: 'GET',
     url: url
   }).then((result) => {
     // 成功接收响应，弹出提示并将响应返回
