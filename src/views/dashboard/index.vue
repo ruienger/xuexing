@@ -9,6 +9,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import highCharts from '@/components/highCharts.vue';
+import store from '@/store/index'
 
 export default {
   name: "Dashboard",
@@ -51,6 +52,16 @@ export default {
   },
   components:{
     highCharts
+  },
+  store,
+  created(){
+    // 初始化所有数据以显示在 highcharts中
+    // store.dispatch('authmanage/queryComment')
+    // store.dispatch('infocheck/queryProduct')
+    // store.dispatch('moduleManage/queryProduct')
+    store.dispatch('projectManage/queryAllProjects')
+    // store.dispatch('signupcheck/querySignUpInfo')
+    // store.dispatch('usermanage/queryProduct')
   }
 };
 </script>
