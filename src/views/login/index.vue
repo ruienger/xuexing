@@ -1,151 +1,174 @@
 <template>
   <div class="login-container" :style="backgroundImage">
-    <div class='loginf'>
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <div class="loginf">
+      <el-form
+        ref="loginForm"
+        :model="loginForm"
+        :rules="loginRules"
+        class="login-form"
+        auto-complete="on"
+        label-position="left"
+      >
+        <div class="title-container">
+          <h3 class="title">行学天下游学平台</h3>
+        </div>
 
-      <div class="title-container">
-        <h3 class="title">行学天下游学平台</h3>
-      </div>
+        <el-form-item prop="username">
+          <span class="svg-container">
+            <svg-icon icon-class="user" />
+          </span>
+          <el-input
+            ref="username"
+            v-model="loginForm.username"
+            placeholder="用户名"
+            name="username"
+            type="text"
+            tabindex="1"
+            auto-complete="on"
+          />
+        </el-form-item>
 
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="用户名"
-          name="username"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
-      </el-form-item>
+        <el-form-item prop="password">
+          <span class="svg-container">
+            <svg-icon icon-class="password" />
+          </span>
+          <el-input
+            :key="passwordType"
+            ref="password"
+            v-model="loginForm.password"
+            :type="passwordType"
+            placeholder="密码"
+            name="password"
+            tabindex="2"
+            auto-complete="on"
+            @keyup.enter.native="handleLogin"
+          />
+          <span class="show-pwd" @click="showPwd">
+            <svg-icon
+              :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
+            />
+          </span>
+        </el-form-item>
 
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
-        <el-input
-          :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
-          :type="passwordType"
-          placeholder="密码"
-          name="password"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
-        <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span>
-      </el-form-item>
+        <el-button
+          v-waves
+          :loading="loading"
+          type="primary"
+          style="width: 100%; margin-bottom: 30px"
+          @click.native.prevent="handleLogin"
+          >Login</el-button
+        >
 
-      <el-button v-waves :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
-      </div>
-
-    </el-form>
-  </div>
+        <div class="tips">
+          <span style="margin-right: 20px">username: admin</span>
+          <span> password: any</span>
+        </div>
+      </el-form>
+    </div>
   </div>
 </template>
 
 <script>
-import Waves from './directives/waves/waves'
-import { validUsername } from '@/utils/validate'
-import allBackgroundImages from './bg/bg'
+import Waves from "./directives/waves/waves";
+import { validUsername } from "@/utils/validate";
+import allBackgroundImages from "./bg/bg";
 export default {
   directives: { Waves },
-  name: 'Login',
+  name: "Login",
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('请输入用户名'))
+        callback(new Error("请输入用户名"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('密码长度不小于6位'))
+        callback(new Error("密码长度不小于6位"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     return {
       loginForm: {
-        username: 'admin',
-        password: '123321',
-        type: 'manager'
+        username: "admin",
+        password: "123321",
+        type: "manager",
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [
+          { required: true, trigger: "blur", validator: validateUsername },
+        ],
+        password: [
+          { required: true, trigger: "blur", validator: validatePassword },
+        ],
       },
       loading: false,
-      passwordType: 'password',
+      passwordType: "password",
       redirect: undefined,
-      allBackgroundImages	
-    }
+      allBackgroundImages,
+    };
   },
   watch: {
     $route: {
-      handler: function(route) {
-        this.redirect = route.query && route.query.redirect
+      handler: function (route) {
+        this.redirect = route.query && route.query.redirect;
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
+      if (this.passwordType === "password") {
+        this.passwordType = "";
       } else {
-        this.passwordType = 'password'
+        this.passwordType = "password";
       }
       this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
+        this.$refs.password.focus();
+      });
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
-          })
+          this.loading = true;
+          this.$store
+            .dispatch("user/login", this.loginForm)
+            .then(() => {
+              this.$router.push({ path: this.redirect || "/" });
+              this.loading = false;
+            })
+            .catch(() => {
+              this.loading = false;
+            });
         } else {
-          console.log('error submit!!')
-          return false
+          console.log("error submit!!");
+          return false;
         }
-      })
-    }
+      });
+    },
   },
   computed: {
-		backgroundImage() {
-		    // 根据背景图数组的长度随机选择索引
-		    const randIndex = Math.floor(Math.random() * this.allBackgroundImages.length)
-		    return {
-		        // 获取对应的图片资源并将其设置到`background-image`属性上
-		        backgroundImage: `url(${this.allBackgroundImages[randIndex]})`
-		    }
-		}	
-	  },
-}
+    backgroundImage() {
+      // 根据背景图数组的长度随机选择索引
+      const randIndex = Math.floor(
+        Math.random() * this.allBackgroundImages.length
+      );
+      return {
+        // 获取对应的图片资源并将其设置到`background-image`属性上
+        backgroundImage: `url(${this.allBackgroundImages[randIndex]})`,
+      };
+    },
+  },
+};
 </script>
 
 <style lang="scss">
 /* 修复input 背景不协调 和光标变色 */
 
-$bg:#283443;
-$light_gray:rgb(235, 235, 235);
+$bg: #283443;
+$light_gray: rgb(235, 235, 235);
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
@@ -188,9 +211,9 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
-$dark_gray:#f7f7f7;
-$titlecolor:rgb(65, 50, 50);
+$bg: #2d3a4b;
+$dark_gray: #f7f7f7;
+$titlecolor: rgb(65, 50, 50);
 
 .login-container {
   min-height: 100%;
@@ -207,12 +230,12 @@ $titlecolor:rgb(65, 50, 50);
     margin: 0 auto;
     overflow: hidden;
   }
-  .loginf{
-    background-color:rgba(255,255,255,0.4);
+  .loginf {
+    background-color: rgba(255, 255, 255, 0.4);
     width: 520px;
-    height:520px;
-    position:relative;
-    margin:0 auto;
+    height: 520px;
+    position: relative;
+    margin: 0 auto;
   }
 
   .tips {

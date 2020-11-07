@@ -242,14 +242,14 @@ export default {
       if (this.form.name && this.form.photo.match(/\s+/) && this.form.price) {
         this.form.status = "报名中";
         this.detailDialogVisible = false;
-        this.updateProject({ data: this.form, list: this.list });
+        this.updateProject({ data: this.form, id: 9411 });
       } else {
         this.$message.error("信息填写不全 或 地址未添加空格分隔");
       }
     },
     // 处理删除按钮事件
     deleteHandler(id) {
-      this.deleteProject({ id, list: this.list });
+      this.deleteProject({ id, cateId: 9411 });
     },
     // 显示项目描述
     showDescroption(dec) {
