@@ -3,7 +3,7 @@
     <div>
       <h2>{{ project.name }}</h2>
       <div id="richText"></div>
-      <el-button type="primary" @click="submitHandler">主要按钮</el-button>
+      <el-button type="primary" @click="submitHandler" style="margin-top:1em">主要按钮</el-button>
     </div>
   </div>
 </template>
