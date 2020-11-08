@@ -1,9 +1,11 @@
 <template>
   <div>
     <div>
-      <h2>{{ project.name }}</h2>
+      <h3>编辑标题</h3>
+      <el-input :placeholder="project.name" v-model="project.name" style="font-size:1.2em;font-weight:700"></el-input>
+      <h3>编辑内容</h3>
       <div id="richText"></div>
-      <el-button type="primary" @click="submitHandler" style="margin-top:1em">主要按钮</el-button>
+      <el-button type="primary" @click="submitHandler" style="margin-top:1em">提交更改</el-button>
     </div>
   </div>
 </template>

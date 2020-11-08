@@ -22,7 +22,7 @@
             { label: '显示状态', prop: 'status' },
           ]"
           :isFixedLabel="true"
-          :status="['报名中', '审核中', '游学中', '已完成']"
+          :status="['正常', '禁用']"
           @updateClicked="updateHandler($event)"
         ></simpleTable>
       </el-tab-pane>
