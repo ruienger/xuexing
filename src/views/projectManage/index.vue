@@ -3,7 +3,7 @@
   <div class="projectManage">
     <!-- 过滤内容 -->
     <div class="projectManage-header">
-      <el-select v-model="filter.status" clearable placeholder="请选择">
+      <el-select v-model="opts" clearable placeholder="请选择">
         <el-option
           v-for="item in status"
           :key="item"
@@ -22,7 +22,11 @@
             description: '',
             price: '',
             status: '报名中',
-            photo: '',
+            photo: {
+              area: '',
+              img: '',
+              status: ''
+            },
             categoryId: 9411,
           })
         "
@@ -51,7 +55,7 @@
       </el-table-column>
       <el-table-column align="center" prop="photo" label="地区">
         <template slot-scope="scope">
-          {{ scope.row.photo || "暂无" }}
+          {{ scope.row.photo.area || "暂无" }}
         </template>
       </el-table-column>
       <el-table-column align="center" prop="price" label="项目时间">
@@ -64,7 +68,7 @@
       </el-table-column>
       <el-table-column align="center" prop="status" label="状态">
         <template slot-scope="scope">
-          {{ formatStatus(scope.row.status) }}
+          {{ formatStatus(scope.row.photo.status) }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作">
@@ -104,7 +108,7 @@
         </el-form-item>
         <el-form-item label="项目地区" :inline="true" prop="photo" required>
           <el-col :span="11">
-            <el-input v-model="form.photo" placeholder="输入地区"></el-input>
+            <el-input v-model="form.photo.area" placeholder="输入地区"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="活动时间" prop="price" required>
@@ -125,7 +129,7 @@
         <el-form-item label="项目描述">
           <el-input type="textarea" v-model="form.description"></el-input>
         </el-form-item>
-        <el-form-item label="状态" v-model="form.status">
+        <el-form-item label="状态" v-model="form.photo.status">
           <el-input value="报名中" disabled />
         </el-form-item>
       </el-form>
@@ -134,6 +138,7 @@
         <el-button @click="detailDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="onSubmit">确 定</el-button>
       </span>
+      {{ form }}
     </el-dialog>
     <!-- 显示项目描述的抽屉 -->
     <el-drawer title="项目描述" :visible.sync="drawer">
@@ -164,8 +169,12 @@ export default {
         // price 当作时间使用
         price: "",
         status: "",
-        // photo 当作地区使用
-        photo: "",
+        // photo 最终承担了所有
+        photo: {
+          area: '',
+          img: '',
+          status: ''
+        },
         categoryId: 9411,
       },
       // 表单验证
@@ -196,6 +205,7 @@ export default {
         status: "",
       },
       status: ["报名中", "审核中", "游学中", "已完成"],
+      opts: ''
     };
   },
   computed: {
@@ -205,7 +215,12 @@ export default {
     },
     // 最后要显示的数据
     projectsShown() {
-      return pageHelper(this.projects9411, this.filter, this.list);
+      return pageHelper(this.projects9411, this.filter, this.list).filter( ele=>{
+        if(this.opts){
+          return ele.photo.status == this.opts
+        }
+        return ele
+      });
     },
   },
   methods: {
@@ -239,9 +254,11 @@ export default {
     },
     // 模态框确定点击
     onSubmit() {
-      if (this.form.name && this.form.photo.match(/\s+/) && this.form.price) {
-        this.form.status = "报名中";
+      if (this.form.name && this.form.photo.area.match(/\s+/) && this.form.price) {
+        this.form.photo.status = "报名中";
+        this.form.photo.img = 'https://media.contentapi.ea.com/content/dam/apex-legends/images/2019/01/apex-media-team-br-16x9.jpg.adapt.crop16x9.1455w.jpg'
         this.detailDialogVisible = false;
+        this.form.photo = JSON.stringify(this.form.photo)
         this.updateProject({ data: this.form, id: 9411 });
       } else {
         this.$message.error("信息填写不全 或 地址未添加空格分隔");

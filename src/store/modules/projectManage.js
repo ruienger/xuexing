@@ -72,6 +72,13 @@ const actions = {
     queryByTarget('/product/findByCategoryId', {
       id
     }, (res) => {
+      if(id == 9411){
+        res.forEach(element => {
+          if(JSON.parse(element.photo)){
+            element.photo = JSON.parse(element.photo)
+          }
+        });
+      }
       commit('SET_PROJECTS'+id, res)
       // 提交mutations
       commit('SET_TOTAL', res.length)
