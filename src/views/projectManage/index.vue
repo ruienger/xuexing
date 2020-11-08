@@ -45,7 +45,7 @@
       <el-table-column align="center" prop="name" label="项目名称">
         <template slot-scope="scope">
           <el-button
-            @click.prevent="showDescroption(scope.row.description)"
+            @click.prevent="showDescroption(scope.row)"
             type="text"
             size="small"
           >
@@ -142,7 +142,10 @@
     </el-dialog>
     <!-- 显示项目描述的抽屉 -->
     <el-drawer title="项目描述" :visible.sync="drawer">
-      <div style="width: 80%; margin: 0 auto">{{ description }}</div>
+      <div style="width: 80%; margin: 0 auto">
+        <el-image :src="desc.photo.img || '404'"></el-image>
+        <p v-html="desc.description"></p>
+      </div>
     </el-drawer>
   </div>
 </template>
@@ -199,7 +202,12 @@ export default {
           { required: true, message: "请填写项目起始日期", trigger: "blur" },
         ],
       },
-      description: "",
+      desc: {
+        description: '',
+        photo: {
+          img: ''
+        }
+      },
       drawer: false,
       filter: {
         status: "",
@@ -270,7 +278,7 @@ export default {
     },
     // 显示项目描述
     showDescroption(dec) {
-      this.description = dec;
+      this.desc = dec;
       this.drawer = true;
     },
   },

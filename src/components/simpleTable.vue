@@ -22,7 +22,7 @@
         :label="item.label"
       >
         <template slot-scope="scope">
-          {{ scope.row[item.content] || scope.row[item.prop] || "暂无" }}
+          {{ scope.row[item.content] || item.isDeep?scope.row.photo.status:scope.row[item.prop] || "暂无" }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="承办单位" v-if="isFixedLabel">
@@ -30,7 +30,7 @@
       </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" :disabled="isFixedLabel"
+          <el-button @click="handleClick(scope.row)" type="text"
             >修改</el-button
           >
         </template>

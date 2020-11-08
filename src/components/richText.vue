@@ -1,7 +1,6 @@
 <template>
   <div>
     <div>
-      {{ project }}
       <h2>{{ project.name }}</h2>
       <div id="richText"></div>
       <el-button type="primary" @click="submitHandler">主要按钮</el-button>

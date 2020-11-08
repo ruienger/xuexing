@@ -18,7 +18,8 @@
           :categoryId="9411"
           :labelArr="[
             { label: '项目名称', prop: 'name' },
-            { label: '项目状态', prop: 'status' },
+            { label: '项目状态', isDeep: true },
+            { label: '显示状态', prop: 'status' },
           ]"
           :isFixedLabel="true"
           :status="['报名中', '审核中', '游学中', '已完成']"
@@ -59,7 +60,10 @@
         ></tableWithImg>
       </el-tab-pane>
       <el-tab-pane label="关于我们" name="9425">
-        <richText :projects="projects9425" @submitClicked="submitHandler($event)"></richText>
+        <richText
+          :projects="projects9425"
+          @submitClicked="submitHandler($event)"
+        ></richText>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -143,14 +147,16 @@ export default {
     },
     // 新增按钮事件
     updateHandler(e) {
-      console.log(e)
+      console.log(e);
+      // 此处需要把 photo JSON序列化
+      e.photo = JSON.stringify(e.photo)
       this.updateProject({ data: e, id: e.categoryId });
     },
     // 富文本编辑器提交按钮事件
-    submitHandler(e){
-      console.log(e)
-      this.updateProject({ data:e, id:e.categoryId })
-    }
+    submitHandler(e) {
+      console.log(e);
+      this.updateProject({ data: e, id: e.categoryId });
+    },
   },
   components: {
     richText,
