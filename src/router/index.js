@@ -83,7 +83,7 @@ export const asyncRoutes = [
     name: 'Check',
     meta: {
       title: '信息审核',
-      icon: 'form',
+      icon: 'tree',
       roles: ['admin','editor']
     },
     children: [
@@ -109,7 +109,7 @@ export const asyncRoutes = [
       path: '',
       name: 'ModuleManage',
       component: () => import('@/views/moduleManage/index'),
-      meta: { title: '模块管理', icon: 'el-icon-s-help', roles: ['admin','editor'] }
+      meta: { title: '模块管理', icon: 'table', roles: ['admin','editor'] }
     }]
   },
 
@@ -120,7 +120,7 @@ export const asyncRoutes = [
       path: '',
       name: 'UserManage',
       component: () => import('@/views/userManage/index'),
-      meta: { title: '用户管理', icon: 'el-icon-s-help', roles: ['admin','editor'] }
+      meta: { title: '用户管理', icon: 'user', roles: ['admin','editor'] }
     }]
   },
 
@@ -131,7 +131,7 @@ export const asyncRoutes = [
       path: '',
       name: 'AuthManage',
       component: () => import('@/views/authManage/index'),
-      meta: { title: '权限管理', icon: 'el-icon-s-help', roles: ['admin'] }
+      meta: { title: '权限管理', icon: 'eye', roles: ['admin'] }
     }]
   }
   // {

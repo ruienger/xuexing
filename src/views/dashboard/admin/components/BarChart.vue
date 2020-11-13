@@ -23,6 +23,14 @@ export default {
     height: {
       type: String,
       default: '300px'
+    },
+    Xopts: {
+      type: Array,
+      required: true
+    },
+    chartData: {
+      type: Object,
+      required: true
     }
   },
   data() {
@@ -62,7 +70,7 @@ export default {
         },
         xAxis: [{
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: this.Xopts,
           axisTick: {
             alignWithLabel: true
           }
@@ -74,25 +82,32 @@ export default {
           }
         }],
         series: [{
-          name: 'pageA',
+          name: '报名中',
           type: 'bar',
           stack: 'vistors',
           barWidth: '60%',
-          data: [79, 52, 200, 334, 390, 330, 220],
+          data: this.chartData['报名中'],
           animationDuration
         }, {
-          name: 'pageB',
+          name: '审核中',
           type: 'bar',
           stack: 'vistors',
           barWidth: '60%',
-          data: [80, 52, 200, 334, 390, 330, 220],
+          data: this.chartData['审核中'],
           animationDuration
         }, {
-          name: 'pageC',
+          name: '游学中',
           type: 'bar',
           stack: 'vistors',
           barWidth: '60%',
-          data: [30, 52, 200, 334, 390, 330, 220],
+          data: this.chartData['游学中'],
+          animationDuration
+        }, {
+          name: '已完成',
+          type: 'bar',
+          stack: 'vistors',
+          barWidth: '60%',
+          data: this.chartData['已完成'],
           animationDuration
         }]
       })

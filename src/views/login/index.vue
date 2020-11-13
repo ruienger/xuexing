@@ -54,7 +54,6 @@
           <el-radio v-model="loginForm.type" label="waiter">管理员</el-radio>
           <el-radio v-model="loginForm.type" label="manager">超级管理员</el-radio>
         </el-form-item>
-        {{loginForm}}
         <el-button
           v-waves
           :loading="loading"
@@ -201,10 +200,15 @@ $cursor: #fff;
   }
 
   .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     background: rgba(39, 39, 39, 0.15);
     border-radius: 5px;
     color: #fcfcfc;
+
+    .el-radio{
+      color: inherit;
+      padding: 0 1em;
+    }
   }
 }
 </style>
@@ -212,7 +216,7 @@ $cursor: #fff;
 <style lang="scss" scoped>
 $bg: #2d3a4b;
 $dark_gray: #f7f7f7;
-$titlecolor: rgb(65, 50, 50);
+$titlecolor: rgb(228, 228, 228);
 
 .login-container {
   min-height: 100%;
@@ -225,16 +229,17 @@ $titlecolor: rgb(65, 50, 50);
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    padding: 160px 35px 2em 35px;
     margin: 0 auto;
     overflow: hidden;
   }
   .loginf {
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(61, 61, 61, 0.9);
     width: 520px;
-    height: 520px;
+    // height: 520px;
     position: relative;
     margin: 0 auto;
+    padding: 1em 0;
   }
 
   .tips {
