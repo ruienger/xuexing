@@ -1,5 +1,6 @@
 
 <template>
+ <!-- v-if="checkPermission(['admin'])" -->
   <div class="projectManage">
     <!-- 过滤内容 -->
     <div class="projectManage-header">
@@ -156,6 +157,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 import moment from "moment";
 import { map } from "highcharts";
 import pageHelper from "@/utils/pageHelper";
+import checkPermission from '@/utils/permission' // 权限判断函数
 
 export default {
   data() {
@@ -232,6 +234,7 @@ export default {
     },
   },
   methods: {
+    checkPermission,
     ...mapActions("projectManage", [
       "queryProject",
       "updateProject",

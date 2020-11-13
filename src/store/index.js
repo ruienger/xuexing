@@ -10,6 +10,7 @@ import infocheck from './modules/infocheck'
 import authmanage from './modules/authmanage'
 import projectManage from './modules/projectManage'
 import moduleManage from './modules/moduleManage'
+import permission from './modules/permission'
 
 Vue.use(Vuex)
 // 这个sotre里面存放了包含
@@ -30,7 +31,8 @@ const store = new Vuex.Store({
     infocheck,
     authmanage,
     projectManage,
-    moduleManage
+    moduleManage,
+    permission
   },
   getters
 })

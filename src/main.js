@@ -13,8 +13,10 @@ import store from './store'
 import router from './router'
 
 import '@/icons' // icon
-import '@/permission' // permission control
-import { mapGetters } from 'vuex'
+import './permission' // permission control
+import {
+  mapGetters
+} from 'vuex'
 
 // //  import echart
 // import echarts from 'echarts'
@@ -29,7 +31,9 @@ import { mapGetters } from 'vuex'
  * please remove it before going online ! ! !
  */
 if (process.env.NODE_ENV === 'production') {
-  const { mockXHR } = require('../mock')
+  const {
+    mockXHR
+  } = require('../mock')
   mockXHR()
 }
 

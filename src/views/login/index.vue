@@ -49,7 +49,12 @@
             />
           </span>
         </el-form-item>
-
+        <el-form-item>
+          <el-radio v-model="loginForm.type" label="customer">普通用户</el-radio>
+          <el-radio v-model="loginForm.type" label="waiter">管理员</el-radio>
+          <el-radio v-model="loginForm.type" label="manager">超级管理员</el-radio>
+        </el-form-item>
+        {{loginForm}}
         <el-button
           v-waves
           :loading="loading"
@@ -92,9 +97,9 @@ export default {
     };
     return {
       loginForm: {
-        username: "admin",
+        username: "Suchuanj",
         password: "123321",
-        type: "manager",
+        type: "customer",
       },
       loginRules: {
         username: [
@@ -130,9 +135,8 @@ export default {
       });
     },
     handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
           this.loading = true;
+          localStorage.setItem('type',this.loginForm.type)
           this.$store
             .dispatch("user/login", this.loginForm)
             .then(() => {
@@ -142,11 +146,6 @@ export default {
             .catch(() => {
               this.loading = false;
             });
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
     },
   },
   computed: {

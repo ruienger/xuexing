@@ -17,7 +17,8 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     avatar: '',
-    id: 0
+    id: 0,
+    roles: []
   }
 }
 
@@ -38,6 +39,9 @@ const mutations = {
   },
   SET_ID: (state, id) => {
     state.id = id
+  },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
   }
 }
 
@@ -87,13 +91,31 @@ const actions = {
         const {
           name,
           avatar,
-          id
+          id,
+          roles
         } = data
 
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
         commit('SET_ID', id)
-        resolve(data)
+        // 使用本地存储代替从数据库拿数据
+        switch ( localStorage.getItem('type')) {
+          case 'customer':
+            commit('SET_ROLES', ['visitor'])
+            resolve({roles:['visitor']})
+            break
+          case 'manager':
+            commit('SET_ROLES', ['admin'])
+            resolve({roles:['admin']})
+            break
+          case 'waiter':
+            commit('SET_ROLES', ['editor'])
+            resolve({roles:['editor']})
+            break
+          default:
+            commit('SET_ROLES', ['visitor'])
+            resolve({roles:['visitor']})
+        }
       }).catch(error => {
         reject(error)
       })
@@ -125,6 +147,34 @@ const actions = {
       removeToken() // must remove  token  first
       commit('RESET_STATE')
       resolve()
+    })
+  },
+
+  async changeRoles({
+    commit,
+    dispatch
+  }, role) {
+    const token = role + '-token'
+
+    commit('SET_TOKEN', token)
+    setToken(token)
+
+    const {
+      roles
+    } = await dispatch('getInfo')
+
+    resetRouter()
+
+    // generate accessible routes map based on roles
+    const accessRoutes = await dispatch('permission/generateRoutes', roles, {
+      root: true
+    })
+    // dynamically add accessible routes
+    router.addRoutes(accessRoutes)
+
+    // reset visited views and cached views
+    dispatch('tagsView/delAllViews', null, {
+      root: true
     })
   }
 }

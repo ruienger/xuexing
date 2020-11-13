@@ -34,7 +34,10 @@ export const constantRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
-    hidden: true
+    hidden: true,
+    meta: {
+      roles: ['admin','editor']
+    }
   },
 
   {
@@ -51,42 +54,50 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '主页', icon: 'dashboard' }
+      meta: { title: '主页', icon: 'dashboard', roles: ['admin','editor','visitor'] }
     }]
   },
 
+  
+  // 404 page must be placed at the end !!!
+  { path: '*', redirect: '/404', hidden: true }
+]
+
+
+export const asyncRoutes = [
   {
     path: '/projectmanage',
     component: Layout,
     children: [{
       path: '',
-      name: 'projectManage',
+      name: 'ProjectManage',
       component: () => import('@/views/projectManage/index'),
-      meta: { title: '游学项目管理', icon: 'el-icon-s-help' }
+      meta: { title: '游学项目管理', icon: 'el-icon-s-help', roles: ['admin'] }
     }]
   },
 
   {
     path: '/check',
     component: Layout,
-    redirect: '/check/sigupcheck',
-    name: 'check',
+    redirect: '/Check/Sigupcheck',
+    name: 'Check',
     meta: {
       title: '信息审核',
-      icon: 'form'
+      icon: 'form',
+      roles: ['admin','editor']
     },
     children: [
       {
         path: 'signupcheck',
-        name: 'signupCheck',
+        name: 'SignupCheck',
         component: () => import('@/views/check/signUpCheck/index'),
-        meta: { title: '报名信息审核', icon: 'form' }
+        meta: { title: '报名信息审核', icon: 'form', roles: ['admin','editor'] }
       },
       {
         path: 'infocheck',
-        name: 'infoCheck',
+        name: 'InfoCheck',
         component: () => import('@/views/check/infoCheck/index'),
-        meta: { title: '咨询信息审核', icon: 'form' }
+        meta: { title: '咨询信息审核', icon: 'form', roles: ['admin','editor'] }
       }
     ]
   },
@@ -96,9 +107,9 @@ export const constantRoutes = [
     component: Layout,
     children: [{
       path: '',
-      name: 'moduleManage',
+      name: 'ModuleManage',
       component: () => import('@/views/moduleManage/index'),
-      meta: { title: '模块管理', icon: 'el-icon-s-help' }
+      meta: { title: '模块管理', icon: 'el-icon-s-help', roles: ['admin','editor'] }
     }]
   },
 
@@ -107,9 +118,9 @@ export const constantRoutes = [
     component: Layout,
     children: [{
       path: '',
-      name: 'userManage',
+      name: 'UserManage',
       component: () => import('@/views/userManage/index'),
-      meta: { title: '用户管理', icon: 'el-icon-s-help' }
+      meta: { title: '用户管理', icon: 'el-icon-s-help', roles: ['admin','editor'] }
     }]
   },
 
@@ -118,70 +129,11 @@ export const constantRoutes = [
     component: Layout,
     children: [{
       path: '',
-      name: 'authManage',
+      name: 'AuthManage',
       component: () => import('@/views/authManage/index'),
-      meta: { title: '权限管理', icon: 'el-icon-s-help' }
+      meta: { title: '权限管理', icon: 'el-icon-s-help', roles: ['admin'] }
     }]
-  },
-  // {
-  //   path: '/nested',
-  //   component: Layout,
-  //   redirect: '/nested/menu1',
-  //   name: 'Nested',
-  //   meta: {
-  //     title: 'Nested',
-  //     icon: 'nested'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'menu1',
-  //       component: () => import('@/views/nested/menu1/index'), // Parent router-view
-  //       name: 'Menu1',
-  //       meta: { title: 'Menu1' },
-  //       children: [
-  //         {
-  //           path: 'menu1-1',
-  //           component: () => import('@/views/nested/menu1/menu1-1'),
-  //           name: 'Menu1-1',
-  //           meta: { title: 'Menu1-1' }
-  //         },
-  //         {
-  //           path: 'menu1-2',
-  //           component: () => import('@/views/nested/menu1/menu1-2'),
-  //           name: 'Menu1-2',
-  //           meta: { title: 'Menu1-2' },
-  //           children: [
-  //             {
-  //               path: 'menu1-2-1',
-  //               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-  //               name: 'Menu1-2-1',
-  //               meta: { title: 'Menu1-2-1' }
-  //             },
-  //             {
-  //               path: 'menu1-2-2',
-  //               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-  //               name: 'Menu1-2-2',
-  //               meta: { title: 'Menu1-2-2' }
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           path: 'menu1-3',
-  //           component: () => import('@/views/nested/menu1/menu1-3'),
-  //           name: 'Menu1-3',
-  //           meta: { title: 'Menu1-3' }
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       path: 'menu2',
-  //       component: () => import('@/views/nested/menu2/index'),
-  //       name: 'Menu2',
-  //       meta: { title: 'menu2' }
-  //     }
-  //   ]
-  // },
-
+  }
   // {
   //   path: 'external-link',
   //   component: Layout,
@@ -193,8 +145,6 @@ export const constantRoutes = [
   //   ]
   // },
 
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({

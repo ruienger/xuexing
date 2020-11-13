@@ -4,7 +4,8 @@ export default{
     namespaced:true,
     state:{
         usermanage:[],
-        total:0
+        total:0,
+        user: []
     },
     getters:{
         userNameList:function(state){
@@ -18,12 +19,15 @@ export default{
         },
         SET_TOTAL(state,total){
             state.total=total
+        },
+        SET_USER(state,user){
+            state.user=user
         }
     },
     actions:{
         findAll({commit}){
             request.get('/customer/findAll').then((res)=>{
-            commit('SET_USERMANAGE',res.data)
+            commit('SET_USER',res.data)
         })
         },
         //分页查询

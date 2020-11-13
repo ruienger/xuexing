@@ -24,7 +24,7 @@ const state = {
   // 产品总数
   total: 0,
   // 所有产品
-  allProjects: {}
+  allProjects: []
 }
 
 const mutations = {
@@ -59,10 +59,16 @@ const mutations = {
 
 const actions = {
   // 请求 所有项目数据
-  queryAllProjects({ commit }){
+  queryAllProjects({ commit, dispatch }){
     queryAll('/product/findAll',(res)=>{
       commit('SET_PROJECTSALL',res)
     })
+    dispatch('queryProject',9411)
+    dispatch('queryProject',9441)
+    dispatch('queryProject',9425)
+    dispatch('queryProject',9414)
+    dispatch('queryProject',9440)
+    dispatch('queryProject',9432)
   },
   // 请求全部项目数据，分页由 工具类 utils 中的 pageHelper 来做
   queryProject({
