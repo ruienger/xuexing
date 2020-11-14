@@ -60,7 +60,7 @@ const actions = {
             id: element.orderId
           }, (result) => {
             // 剥离所有和 项目管理里项目有关的
-            if (result.orderLines[0].product.categoryId == '9411') {
+            if (result.orderLines[0] && result.orderLines[0].product && result.orderLines[0].product.categoryId == '9411') {
               element.customer = result.customer
               element.product = result.orderLines[0].product
               element.product.photo = JSON.parse(result.orderLines[0].product.photo)

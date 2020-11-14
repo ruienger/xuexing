@@ -29,23 +29,19 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="8">
+    <el-row>
+      <el-col
+        style="padding-right: 8px; margin-bottom: 30px"
+      >
+        <bar-chart  :chart-data="barChartData" :Xopts="XoptsBar" />
+      </el-col></el-row>
+      <!-- <el-row :gutter="8">
       <el-col
         :xs="{ span: 24 }"
         :sm="{ span: 24 }"
         :md="{ span: 24 }"
         :lg="{ span: 12 }"
         :xl="{ span: 12 }"
-        style="padding-right: 8px; margin-bottom: 30px"
-      >
-        <raddar-chart />
-      </el-col>
-      <el-col
-        :xs="{ span: 24 }"
-        :sm="{ span: 12 }"
-        :md="{ span: 12 }"
-        :lg="{ span: 6 }"
-        :xl="{ span: 6 }"
         style="margin-bottom: 30px"
       >
         <transaction-table />
@@ -59,10 +55,10 @@
         style="margin-bottom: 30px"
       >
       </el-col
-      ><bar-chart />
-    </el-row>
+      ><raddar-chart />
+      </el-row> -->
 
-    {{ projects9411 }}
+    <!-- {{ projects9411 }} -->
   </div>
 </template>
 
@@ -115,6 +111,7 @@ export default {
       lineChartData: lineChartData.newVisitis,
       type: "newVisitis",
       Xopts: ["1", "1", "1", "1"],
+      XoptsBar: ["1", "1", "1", "1"],
     };
   },
   computed: {
@@ -156,6 +153,26 @@ export default {
       });
       return nameArr;
     },
+    barChartData(){
+      let nameArr = this.projects9411.map((i) => {
+        return { name: i.name };
+      });
+      this.XoptsBar = nameArr.map(i=>{return i.name})
+      let arr = {
+        '报名中': [],
+        '审核中': [],
+        '已完成': [],
+        '游学中': [],
+      }
+      for(let key in arr){
+        nameArr.forEach((i) => {
+          arr[key].push(this.signupcheck.filter((e) => {
+            return e.product.name == i.name && e.product.photo.status == key;
+          }).length)
+        });
+      }
+      return arr
+    }
   },
   watch: {
     user: function () {
