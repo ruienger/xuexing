@@ -34,7 +34,7 @@ export default{
         queryProduct({ commit }, queryForm) {
             request({
             method: 'POST',
-            url: '/product/query',
+            url: '/customer/query',
             data: querystring.stringify(queryForm)
             }).then((res) => {
             commit('SET_USERMANAGE', res.data.list)
