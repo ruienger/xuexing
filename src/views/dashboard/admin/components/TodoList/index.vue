@@ -48,13 +48,13 @@ const filters = {
 }
 const defalutList = [
   { text: '检查今日用户余额变化情况', done: true },
-  { text: '预览项目数量是否符合预期', done: false },
-  { text: '通过图表检查待审核任务', done: false },
-  { text: '通过饼状图检查项目报名情况', done: false },
-  { text: '休息一下吧！', done: false },
-  { text: '根据计划管理项目', done: false },
-  { text: '积极审核信息', done: false },
-  { text: '最后维护模块和用户信息', done: false }
+  { text: '检查项目及模块总数是否出现异常', done: false },
+  { text: '审核那些未审核的报名信息', done: false },
+  { text: '审核那些未审核的咨询信息', done: false },
+  { text: '对饼状报名分布图分析以了解报名情况', done: false },
+  { text: '根据条状图了解各项目状态详情', done: false },
+  { text: '进行针对模块的管理与维护工作', done: false },
+  { text: '进行针对用户的管理与维护工作', done: false }
 ]
 export default {
   components: { Todo },

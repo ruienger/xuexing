@@ -94,10 +94,10 @@ export default {
           }
         },
         legend: {
-          data: ['expected', 'actual']
+          data: ['期望值', '实际值']
         },
         series: [{
-          name: 'expected', itemStyle: {
+          name: '期望值', itemStyle: {
             normal: {
               color: '#FF005A',
               lineStyle: {
@@ -113,7 +113,7 @@ export default {
           animationEasing: 'cubicInOut'
         },
         {
-          name: 'actual',
+          name: '实际值',
           smooth: true,
           type: 'line',
           itemStyle: {

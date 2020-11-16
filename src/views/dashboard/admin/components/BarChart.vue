@@ -22,7 +22,7 @@ export default {
     },
     height: {
       type: String,
-      default: '300px'
+      default: '310px'
     },
     Xopts: {
       type: Array,

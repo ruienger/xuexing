@@ -7,19 +7,19 @@
       <pan-thumb :image="avatar" class="panThumb" />
       <mallki class-name="mallki-text" text="vue-element-admin" />
       <div style="padding-top:35px;" class="progress-item">
-        <span>Vue</span>
-        <el-progress :percentage="56.9" />
+        <span>工作时长占比</span>
+        <el-progress :percentage="65.00" />
       </div>
       <div class="progress-item">
-        <span>JavaScript</span>
-        <el-progress :percentage="35.5" />
+        <span>休息时间占比</span>
+        <el-progress :percentage="15.00" />
       </div>
       <div class="progress-item">
-        <span>CSS</span>
-        <el-progress :percentage="7.6" />
+        <span>其他活动占比</span>
+        <el-progress :percentage="20.00" />
       </div>
       <div class="progress-item">
-        <span>ESLint</span>
+        <span>出勤率</span>
         <el-progress :percentage="100" status="success" />
       </div>
     </div>

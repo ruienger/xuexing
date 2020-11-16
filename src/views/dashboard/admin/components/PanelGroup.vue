@@ -3,7 +3,7 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
         <div class="card-panel-icon-wrapper icon-people">
-          <el-avatar class="el-icon-user-solid" class-name="card-panel-icon" />
+          <div class="iconfont icon-yue card-panel-avatar" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
@@ -16,7 +16,7 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel" @click="handleSetLineChartData('messages')">
         <div class="card-panel-icon-wrapper icon-message">
-          <el-avatar class="el-icon-info" class-name="card-panel-icon" />
+          <div class="iconfont icon-xiangmu card-panel-avatar" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
@@ -29,7 +29,7 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel" @click="handleSetLineChartData('purchases')">
         <div class="card-panel-icon-wrapper icon-money">
-          <el-avatar class="el-icon-s-check" class-name="card-panel-icon" />
+          <div class="iconfont icon-shenhe1 card-panel-avatar" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
@@ -42,7 +42,7 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel" @click="handleSetLineChartData('shoppings')">
         <div class="card-panel-icon-wrapper icon-shopping">
-          <el-avatar class="el-icon-s-check" class-name="card-panel-icon" />
+          <div class="iconfont icon-shenhe card-panel-avatar" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
@@ -139,9 +139,14 @@ export default {
       padding: 16px;
       transition: all 0.38s ease-out;
       border-radius: 6px;
+
+      .card-panel-avatar{
+        font-size: 3em;
+      }
     }
 
     .card-panel-icon {
+      height: 100%;
       float: left;
       font-size: 48px;
     }

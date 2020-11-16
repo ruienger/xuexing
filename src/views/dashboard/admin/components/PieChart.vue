@@ -20,7 +20,7 @@ export default {
     },
     height: {
       type: String,
-      default: '300px'
+      default: '430px'
     },
     pieData: {
       type: Array,
@@ -35,6 +35,14 @@ export default {
   watch:{
     pieData:function(){
       this.chart.setOption({
+        title:{
+          text: '项目报名情况图',
+          left: 'center',
+          top: 'top',
+          textStyle: {
+            color: '#333'
+          }
+        },
         tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -48,7 +56,7 @@ export default {
         },
         series: [
           {
-            name: 'WEEKLY WRITE ARTICLES',
+            name: '该项目的报名人数为',
             type: 'pie',
             roseType: 'radius',
             radius: [15, 95],
@@ -78,6 +86,14 @@ export default {
       this.chart = echarts.init(this.$el, 'macarons')
 
       this.chart.setOption({
+        title:{
+          text: '项目报名情况图',
+          left: 'center',
+          top: 'top',
+          textStyle: {
+            color: '#333'
+          }
+        },
         tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -91,7 +107,7 @@ export default {
         },
         series: [
           {
-            name: 'WEEKLY WRITE ARTICLES',
+            name: '该项目的报名人数为',
             type: 'pie',
             roseType: 'radius',
             radius: [15, 95],

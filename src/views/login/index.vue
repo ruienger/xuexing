@@ -96,9 +96,9 @@ export default {
     };
     return {
       loginForm: {
-        username: "Suchuanj",
+        username: "admin",
         password: "123321",
-        type: "customer",
+        type: "manager",
       },
       loginRules: {
         username: [
