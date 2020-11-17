@@ -41,6 +41,7 @@
       stripe
       style="width: 100%"
       v-loading="loading"
+      :default-sort = "{prop: 'date', order: 'descending'}"
     >
       <!-- <el-table-column align="center" prop="id" label="ID" width="80" /> -->
       <el-table-column align="center" prop="name" label="项目名称">
@@ -59,7 +60,7 @@
           {{ scope.row.photo.area || "暂无" }}
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="price" label="项目时间">
+      <el-table-column align="center" prop="price" label="项目时间" sortable>
         <template slot-scope="scope">
           {{ formatTime(scope.row.price) }}
         </template>
@@ -89,6 +90,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <br>
     <el-pagination
       background
       layout="total,prev, pager, next"
@@ -103,14 +105,16 @@
       :visible.sync="detailDialogVisible"
       width="60%"
     >
+    {{ form.photo.area }}
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="项目名称" prop="name" required>
           <el-input v-model="form.name"></el-input>
         </el-form-item>
         <el-form-item label="项目地区" :inline="true" prop="photo" required>
-          <el-col :span="11">
-            <el-input v-model="form.photo.area" placeholder="输入地区"></el-input>
-          </el-col>
+          <el-cascader
+            v-model="form.photo.area"
+            :props="props"
+            filterable></el-cascader>
         </el-form-item>
         <el-form-item label="活动时间" prop="price" required>
           <el-col :span="11">
@@ -131,8 +135,14 @@
           <el-input type="textarea" v-model="form.description"></el-input>
         </el-form-item>
         <el-form-item label="状态" v-model="form.photo.status">
-          <el-input value="报名中" disabled />
+          <el-select v-model="form.photo.status" placeholder="项目状态">
+            <el-option label="报名中" value="报名中"></el-option>
+            <el-option label="审核中" value="审核中"></el-option>
+            <el-option label="游学中" value="游学中"></el-option>
+            <el-option label="已完成" value="已完成"></el-option>
+          </el-select>
         </el-form-item>
+        <upload-img></upload-img>
       </el-form>
       <!-- <span>{{ form }}</span> -->
       <span slot="footer" class="dialog-footer">
@@ -156,8 +166,11 @@
 import { mapState, mapActions, mapGetters } from "vuex";
 import moment from "moment";
 import { map } from "highcharts";
+import uploadImg from '@/components/uploadImg.vue'
 import pageHelper from "@/utils/pageHelper";
 import checkPermission from '@/utils/permission' // 权限判断函数
+import UploadImg from '../../components/uploadImg.vue';
+import addTree from '@/api/addressTree'
 
 export default {
   data() {
@@ -215,7 +228,21 @@ export default {
         status: "",
       },
       status: ["报名中", "审核中", "游学中", "已完成"],
-      opts: ''
+      opts: '',
+      address: '',
+      props: {
+        lazy: true,
+        lazyLoad (node, resolve){
+          const { level } = node
+          let nodes = []
+          node.data?nodes=node.data:nodes = addTree.filter( e => {
+            return e.level == level
+          })
+          console.log(nodes)
+          console.log(node)
+          resolve(nodes)
+        }
+      }
     };
   },
   computed: {
@@ -232,6 +259,9 @@ export default {
         return ele
       });
     },
+  },
+  components: {
+    uploadImg
   },
   methods: {
     checkPermission,
@@ -265,15 +295,15 @@ export default {
     },
     // 模态框确定点击
     onSubmit() {
-      if (this.form.name && this.form.photo.area.match(/\s+/) && this.form.price) {
-        this.form.photo.status = "报名中";
+      let str = ''
+        this.form.photo.area.forEach(e=>{
+          str += e +' '
+        })
+        this.form.photo.area = str
         this.form.photo.img = 'https://media.contentapi.ea.com/content/dam/apex-legends/images/2019/01/apex-media-team-br-16x9.jpg.adapt.crop16x9.1455w.jpg'
         this.detailDialogVisible = false;
         this.form.photo = JSON.stringify(this.form.photo)
         this.updateProject({ data: this.form, id: 9411 });
-      } else {
-        this.$message.error("信息填写不全 或 地址未添加空格分隔");
-      }
     },
     // 处理删除按钮事件
     deleteHandler(id) {
@@ -283,7 +313,7 @@ export default {
     showDescroption(dec) {
       this.desc = dec;
       this.drawer = true;
-    },
+    }
   },
   created() {
     this.queryProject(9411);

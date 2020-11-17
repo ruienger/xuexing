@@ -5,21 +5,21 @@
     </div>
     <div style="position:relative;">
       <pan-thumb :image="avatar" class="panThumb" />
-      <mallki class-name="mallki-text" text="vue-element-admin" />
+      <mallki class-name="mallki-text" text="出勤活动时长建议表" />
       <div style="padding-top:35px;" class="progress-item">
-        <span>工作时长占比</span>
+        <span>工作时长占比 (8-9h)</span>
         <el-progress :percentage="65.00" />
       </div>
       <div class="progress-item">
-        <span>休息时间占比</span>
+        <span>休息时间占比 (2-2.5h)</span>
         <el-progress :percentage="15.00" />
       </div>
       <div class="progress-item">
-        <span>其他活动占比</span>
+        <span>其他活动占比 (2-3h)</span>
         <el-progress :percentage="20.00" />
       </div>
       <div class="progress-item">
-        <span>出勤率</span>
+        <span>出勤率 (100%)</span>
         <el-progress :percentage="100" status="success" />
       </div>
     </div>

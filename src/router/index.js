@@ -131,7 +131,7 @@ export const asyncRoutes = [
       path: '',
       name: 'AuthManage',
       component: () => import('@/views/authManage/index'),
-      meta: { title: '权限管理', icon: 'eye', roles: ['admin'] }
+      meta: { title: '权限查看', icon: 'eye', roles: ['admin'] }
     }]
   }
   // {

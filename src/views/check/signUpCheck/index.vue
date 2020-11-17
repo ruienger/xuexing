@@ -8,7 +8,7 @@
     <!-- <input autosize type="text" placeholder="输入项目名称" /> -->
     <!-- top -->
     <!-- 表格 -->
-    <el-table :data="shownSignUpCheck" stripe style="width: 100%">
+    <el-table :data="shownSignUpCheck" stripe style="width: 100%" :default-sort = "{prop: 'date', order: 'descending'}">
       <!-- <el-table-column align="center" prop="id" label="编号" width="80px" /> -->
       <el-table-column align="center" prop="customer.realname" label="姓名" />
       <el-table-column
@@ -23,6 +23,7 @@
         prop="commentTime"
         :formatter="formatDate"
         label="报名时间"
+        sortable
       />
       <el-table-column align="center" fixed="right" label="查看" width="150">
         <template slot-scope="scope">
@@ -38,6 +39,7 @@
       </el-table-column>
     </el-table>
     <!-- 表格 -->
+    <br>
     <!-- 分页 -->
     <el-pagination
       background

@@ -48,6 +48,7 @@
           :status="['正常', '禁用']"
           :isFixedLabel="false"
           @updateClicked="updateHandler($event)"
+          @deleteClicked="deleteHandler($event)"
         ></simpleTable>
       </el-tab-pane>
       <el-tab-pane label="学生风采" name="9414">
@@ -147,9 +148,7 @@ export default {
     },
     // 新增按钮事件
     updateHandler(e) {
-      console.log(e);
-      // 此处需要把 photo JSON序列化
-      e.photo = JSON.stringify(e.photo)
+      console.log(e)
       this.updateProject({ data: e, id: e.categoryId });
     },
     // 富文本编辑器提交按钮事件

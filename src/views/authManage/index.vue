@@ -1,13 +1,13 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="handleAddRole" disabled>New Role</el-button>
-    <el-table :data="rolesList" style="width: 100%;margin-top:30px;" border>
+    <p type="primary" style="color:#999;">您可以在此查看各个角色的相关权限</p>
+    <el-table :data="rolesList" style="width: 100%;margin-top:30px;" >
       <el-table-column align="center" label="角色关键词" width="220">
         <template slot-scope="scope">
           {{ scope.row.key }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="所属权限" width="220">
+      <el-table-column align="center" label="权限级别" width="220">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
@@ -17,27 +17,22 @@
           {{ scope.row.description }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="权限操作(静态)">
+      <el-table-column align="center" label="权限详情">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)">Edit</el-button>
+          <el-button type="primary" size="small" @click="handleEdit(scope)">查看详情</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Role':'New Role'">
+    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'查看权限详情':'不可用'">
       <el-form :model="role" label-width="80px" label-position="left">
-        <el-form-item label="Name">
-          <el-input v-model="role.name" placeholder="Role Name" />
+        <el-form-item label="权限级别">
+          <el-tag>{{ role.name }}</el-tag>
         </el-form-item>
-        <el-form-item label="Desc">
-          <el-input
-            v-model="role.description"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            type="textarea"
-            placeholder="Role Description"
-          />
+        <el-form-item label="权限描述">
+          <span>{{ role.description }}</span>
         </el-form-item>
-        <el-form-item label="Menus">
+        <el-form-item label="权限树">
           <el-tree
             ref="tree"
             :check-strictly="checkStrictly"
@@ -46,12 +41,12 @@
             show-checkbox
             node-key="path"
             class="permission-tree"
+            disabled
           />
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
-        <el-button type="danger" @click="dialogVisible=false">Cancel</el-button>
-        <el-button type="primary" @click="confirmRole">Confirm</el-button>
+        <el-button type="primary" @click="dialogVisible=false">确认</el-button>
       </div>
     </el-dialog>
   </div>

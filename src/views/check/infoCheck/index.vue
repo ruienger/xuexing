@@ -8,7 +8,8 @@
       >
       </el-option>
     </el-select>
-    <el-table :data="finalInfoCheck" stripe style="width: 100%">
+    
+    <el-table :data="finalInfoCheck" stripe style="width: 100%" :default-sort = "{prop: 'date', order: 'descending'}">
       <!-- <el-checkbox v-model="checked" prop="id" label="编号"></el-checkbox> -->
       <!-- <el-table-column align="center" prop="id" label="编号" width="80" /> -->
       <el-table-column align="center" label="姓名" >
@@ -21,7 +22,7 @@
           {{ scope.row.customer.telephone || '暂无' }}
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="commentTime" label="留言时间" >
+      <el-table-column align="center" prop="commentTime" label="留言时间" sortable>
         <template slot-scope="scope">
           {{ formatTime(scope.row.commentTime) || '暂无' }}
         </template>
@@ -41,6 +42,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <br>
     <!-- 分页 -->
     <el-pagination
       background

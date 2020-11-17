@@ -1,9 +1,23 @@
 <template>
   <div>
-    <el-select v-model="filter.status" clearable placeholder="请选择">
-      <el-option v-for="item in status" :key="item" :label="item" :value="item">
-      </el-option>
-    </el-select>
+    <div class="projectManage-header">
+      <el-select v-model="filter.status" clearable placeholder="请选择">
+        <el-option v-for="item in status" :key="item" :label="item" :value="item">
+        </el-option>
+      </el-select>
+      <!-- 新增常见问题 -->
+      <el-button
+        type="primary"
+        round
+        v-if="!isFixedLabel"
+        @click="
+          dialogFormVisible = true
+          form = {}
+        "
+        >新增项目</el-button
+      >
+    </div>
+    
     <el-table
       :data="projectsShown"
       stripe
@@ -33,9 +47,34 @@
           <el-button @click="handleClick(scope.row)" type="text"
             >修改</el-button
           >
+          <el-popconfirm
+            title="这是一段内容确定删除吗？"
+            @onConfirm="handleDelete(scope.row)"
+            style="margin-left: 5px"
+          >
+            <el-button  v-if="!isFixedLabel" slot="reference" type="text" size="small" style="color:red"
+              >删除</el-button
+            >
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog title="新增QA" :visible.sync="dialogFormVisible">
+      <el-form :model="form">
+        <el-form-item label="常见问题" :label-width="'400'">
+          <el-input v-model="form.name" autocomplete="off" required></el-input>
+        </el-form-item>
+        <el-form-item label="常见回答">
+          <el-input type="textarea" v-model="form.description" autocomplete="off" required></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleClick(form)"
+          >确 定</el-button
+        >
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -64,6 +103,14 @@ export default {
         page: 0,
         pageSize: 10,
       },
+      dialogFormVisible: false,
+      form: {
+        name: '',
+        description: '',
+        price: '',
+        status: '正常',
+        photo: ''
+      }
     };
   },
   computed: {
@@ -88,9 +135,16 @@ export default {
     },
     // 修改按钮点击事件
     handleClick(e){
-        e.categoryId = this.categoryId
-        e.status != '正常'?e.status = '正常':e.status = '禁用'
-        this.$emit('updateClicked',e)
+      if(this.dialogFormVisible){
+        this.dialogFormVisible = false
+      }
+      e.categoryId = this.categoryId
+      e.status != '正常'?e.status = '正常':e.status = '禁用'
+      this.$emit('updateClicked',e)
+    },
+    // 删除按钮点击事件
+    handleDelete(id){
+      this.$emit('deleteClicked',id)
     }
   },
 };
