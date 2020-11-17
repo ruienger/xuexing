@@ -45,20 +45,22 @@ export default{
         saveOrUpdate({dispatch},data) {
             request({
             method: 'POST',
-            url: '/product/saveOrUpdate',
-            data: querystring.stringify({
-                id:data.id,
-                name:data.name,
-                description:data.description,
-                price:data.price,
-                status:data.status,
-                photo:data.photo,
-                categoryId:data.categoryId
-            })
+            url: '/customer/saveOrUpdate',
+            data: querystring.stringify(data)
             }).then((res) => {
                 dispatch("queryProduct",{page:0,pageSize:6})
-                console.log(res.message)
+                // console.log(res.message)
             })
         },
+        //删除
+        DeleteById({dispatch},data){
+            request({
+                method: 'GET',
+                url: '/customer/deleteById?id='+data
+                }).then((res) => {
+                    dispatch("queryProduct",{page:0,pageSize:6})
+                    console.log(res.message)
+                })
+        }
     }
 }
