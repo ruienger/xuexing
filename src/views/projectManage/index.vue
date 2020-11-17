@@ -57,7 +57,7 @@
       </el-table-column>
       <el-table-column align="center" prop="photo" label="地区">
         <template slot-scope="scope">
-          {{ scope.row.photo.area || "暂无" }}
+          {{ scope.row.photo.area[0]+' '+scope.row.photo.area[1] || "暂无" }}
         </template>
       </el-table-column>
       <el-table-column align="center" prop="price" label="项目时间" sortable>
@@ -295,11 +295,6 @@ export default {
     },
     // 模态框确定点击
     onSubmit() {
-      let str = ''
-        this.form.photo.area.forEach(e=>{
-          str += e +' '
-        })
-        this.form.photo.area = str
         this.form.photo.img = 'https://media.contentapi.ea.com/content/dam/apex-legends/images/2019/01/apex-media-team-br-16x9.jpg.adapt.crop16x9.1455w.jpg'
         this.detailDialogVisible = false;
         this.form.photo = JSON.stringify(this.form.photo)

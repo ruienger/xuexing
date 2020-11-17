@@ -80,8 +80,12 @@ const actions = {
     }, (res) => {
       if(id == 9411){
         res.forEach(element => {
-          if(JSON.parse(element.photo)){
-            element.photo = JSON.parse(element.photo)
+          if(element.photo){
+            if(JSON.parse(element.photo)){
+              element.photo = JSON.parse(element.photo)
+            }
+          }else{
+            element.photo = {}
           }
         });
       }
