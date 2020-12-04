@@ -4,7 +4,7 @@
     <div class="table-card-wrapper">
       <div class="table-card" v-for="item in projects" :key="item.id">
         <el-card shadow="hover" style="width: 100%; height: 100%">
-          <el-image :src="item.photo" class="image" @click="handlePictureCardPreview(item.photo)" >
+          <el-image :src="item.photo" class="image" @click="handlePictureCardPreview(item.photo)" fit="contain">
             <div slot="error" class="image-slot">
               <i class="el-icon-picture-outline"></i>
             </div>
@@ -75,9 +75,14 @@
         </el-form-item>
         <el-form-item label="上传图片" :label-width="'400'">
           <el-upload
-              action="http://134.175.100.63:8686 "
+              action="http://121.199.29.84:8001/file/upload"
               :file-list="fileList"
               :limit="1"
+              :headers="{
+                Authorization: 
+                'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJOUT09Iiwic3ViIjoiYWRtaW4xIiwiaXNzIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjYiLCJpYXQiOjE2MDcwODE0MzgsImF1ZCI6InJlc3RhcGl1c2VyIiwiZXhwIjoxNjA3MjU0MjM4LCJuYmYiOjE2MDcwODE0Mzh9.gJG5vklxI4Ja0V_6q2sCgYBkH9qtqZaJXmhOfKZSRKs'
+                }"
+              :on-success="uploadSuccess"
               list-type="picture-card">
               <i slot="default" class="el-icon-plus"></i>
               <div slot="file" slot-scope="{file}">
@@ -175,7 +180,8 @@ export default {
       this.form.status = '正常'
       this.form.categoryId = this.categoryId
       // 由于图片服务器不可用，暂由固定url写入
-      this.form.photo = 'https://media.contentapi.ea.com/content/dam/apex-legends/images/2019/01/apex-media-team-br-16x9.jpg.adapt.crop16x9.1455w.jpg'
+      console.log(this.form);
+      // this.form.photo = 'https://media.contentapi.ea.com/content/dam/apex-legends/images/2019/01/apex-media-team-br-16x9.jpg.adapt.crop16x9.1455w.jpg'
       // OK
       this.$emit('updateClicked',this.form)
       this.form = {}
@@ -183,10 +189,16 @@ export default {
     },
     // 图片上传组件事件
     handleRemove(file) {
+      this.fileList = []
     },
     handlePictureCardPreview(file) {
       file.url?this.dialogImageUrl = file.url:this.dialogImageUrl = file
       this.dialogVisible = true;
+    },
+    // 上传成功时的回调
+    uploadSuccess(res, f, fL){
+      console.log(res)
+      this.form.photo = 'http://121.199.29.84:8888/group1/' + res.data.id
     }
   },
 };
