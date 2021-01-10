@@ -156,13 +156,13 @@ export default {
     colorFormat(status) {
       switch (status) {
         case "正常":
-          return "#f44";
-        default:
           return "#4d4";
+        default:
+          return "#f44";
       }
     },
     textFormat(text) {
-      return text == "正常" ? "未显示" : "在显示";
+      return text == "正常" ? "在显示" : "未显示";
     },
     // 删除按钮点击后
     deleteHandler(i) {
@@ -197,7 +197,6 @@ export default {
     },
     // 上传成功时的回调
     uploadSuccess(res, f, fL){
-      console.log(res)
       this.form.photo = 'http://121.199.29.84:8888/group1/' + res.data.id
     }
   },

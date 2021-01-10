@@ -14,7 +14,7 @@
           dialogFormVisible = true
           form = {}
         "
-        >新增项目</el-button
+        >新增</el-button
       >
     </div>
     

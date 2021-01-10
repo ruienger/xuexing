@@ -1,7 +1,6 @@
 <template>
   <div>
       <!-- :http-request="uploadImg" -->
-      {{ fileList }}
     <el-form-item label="上传图片" >
       <el-upload
         action="#"
@@ -12,7 +11,7 @@
         list-type="picture-card"
       >
         <i slot="default" class="el-icon-plus"></i>
-        <div slot="file" slot-scope="{ file }">
+        <template slot="file" slot-scope="{ file }">
           <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
           <span class="el-upload-list__item-actions">
             <span
@@ -29,7 +28,7 @@
               <i class="el-icon-delete"></i>
             </span>
           </span>
-        </div>
+        </template>
       </el-upload>
       <p style="color: #aaa">! 仅允许上传一张图片</p>
     </el-form-item>

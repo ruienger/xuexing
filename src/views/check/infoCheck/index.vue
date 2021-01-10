@@ -96,7 +96,7 @@ export default {
       form: [],
       list: {
         page: 0,
-        pageSize: 5,
+        pageSize: 10,
       },
       time: "",
       options: [

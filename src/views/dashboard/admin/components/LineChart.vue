@@ -103,8 +103,12 @@ export default {
               lineStyle: {
                 color: '#FF005A',
                 width: 2
-              }
+              },
+              
             }
+          },
+          areaStyle: {
+            color: '#FF005A',
           },
           smooth: true,
           type: 'line',
