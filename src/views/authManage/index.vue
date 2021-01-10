@@ -41,7 +41,7 @@
             show-checkbox
             node-key="path"
             class="permission-tree"
-            disabled
+            :disabled="true"
           />
         </el-form-item>
       </el-form>
@@ -84,7 +84,10 @@ export default {
   computed: {
     
     routesData() {
-      return this.routes
+      return this.routes.map( e =>({
+        ...e,
+        disabled: true,
+      }))
     }
   },
   components: { SwitchRoles },

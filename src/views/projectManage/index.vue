@@ -135,6 +135,7 @@
         </el-form-item>
         <el-form-item label="项目描述">
           <el-input type="textarea" v-model="form.description"></el-input>
+          <div id="projectDesc"></div>
         </el-form-item>
         <el-form-item label="状态" v-model="form.photo.status">
           <el-select v-model="form.photo.status" placeholder="项目状态">
@@ -193,7 +194,7 @@
     <el-drawer title="项目描述" :visible.sync="drawer">
       <div style="width: 80%; margin: 0 auto">
         <el-image :src="desc.photo.img || '404'"></el-image>
-        <p v-html="desc.description"></p>
+        <textarea class="textArea" v-html="desc.description"></textarea>
       </div>
     </el-drawer>
     <!-- 显示图片的dialog -->
@@ -213,10 +214,12 @@ import pageHelper from "@/utils/pageHelper";
 import checkPermission from "@/utils/permission"; // 权限判断函数
 import UploadImg from "../../components/uploadImg.vue";
 import addTree from "@/api/addressTree";
+import E from "wangeditor";
 
 export default {
   data() {
     return {
+      editor: {},
       waiterDialogVisible: false,
       detailDialogVisible: false,
       list: {
@@ -312,6 +315,11 @@ export default {
   components: {
     uploadImg,
   },
+  watch: {
+    form: function () {
+      this.editor.txt.html(this.form.description);
+    },
+  },
   methods: {
     checkPermission,
     ...mapActions("projectManage", [
@@ -375,6 +383,11 @@ export default {
   created() {
     this.queryProject(9411);
   },
+  mounted() {
+    this.editor = new E("#projectDesc");
+    this.editor.create();
+    this.editor.txt.html(this.form.description);
+  },
 };
 </script>
 
@@ -390,5 +403,12 @@ export default {
   display: flex;
   justify-content: space-between;
   padding-right: 5px;
+}
+.textArea {
+  width: 100%;
+  height: 40em;
+  border: none;
+  padding: 1em 0.4em;
+  background-color: none;
 }
 </style>

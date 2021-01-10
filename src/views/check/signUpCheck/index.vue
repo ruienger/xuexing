@@ -8,7 +8,12 @@
     <!-- <input autosize type="text" placeholder="输入项目名称" /> -->
     <!-- top -->
     <!-- 表格 -->
-    <el-table :data="shownSignUpCheck" stripe style="width: 100%" :default-sort = "{prop: 'date', order: 'descending'}">
+    <el-table
+      :data="shownSignUpCheck"
+      stripe
+      style="width: 100%"
+      :default-sort="{ prop: 'date', order: 'descending' }"
+    >
       <!-- <el-table-column align="center" prop="id" label="编号" width="80px" /> -->
       <el-table-column align="center" prop="customer.realname" label="姓名" />
       <el-table-column
@@ -39,7 +44,7 @@
       </el-table-column>
     </el-table>
     <!-- 表格 -->
-    <br>
+    <br />
     <!-- 分页 -->
     <el-pagination
       background
@@ -75,13 +80,14 @@
         </el-form-item>
         <el-form-item label="项目目的地">
           <label>{{
-            form.product ? form.product.photo.area : '暂无'
+            form.product
+              ? form.product.photo.area &&
+                form.product.photo.area[0] + " " + form.product.photo.area[1]
+              : "暂无"
           }}</label>
         </el-form-item>
         <el-form-item label="项目状态">
-          <label>{{
-            form.product ? form.product.photo.status : "暂无"
-          }}</label>
+          <label>{{ form.product ? form.product.photo.status : "暂无" }}</label>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -104,11 +110,9 @@ export default {
     return {
       dialogVisible: false,
       form: {
-        product:{
-          photo:{
-
-          }
-        }
+        product: {
+          photo: {},
+        },
       },
       list: {
         page: 0,
@@ -156,7 +160,6 @@ export default {
     edithandle(data) {
       this.form = data;
       this.dialogVisible = true;
-      
     },
     //时间格式化
     formatDate(row, column) {

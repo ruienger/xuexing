@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       title: '学行天下游学平台',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      logo: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3073865373,3613492176&fm=26&gp=0.jpg'
     }
   }
 }
